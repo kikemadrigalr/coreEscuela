@@ -14,6 +14,10 @@ namespace CoreEscuela.Entidades
         public string Pais { get; set; }
         public string Ciudad { get; set; }
 
+        // la propiedad TipoEscuela sera del TiposEscuelas
+        //el cual es un objeto Enumeraable creado a nivel de las entidades
+        public TiposEscuela TipoEscuela { get; set; }
+
         //constructor
         // public Escuela(string nombre, int anio){
         //   this.nombre = nombre;
@@ -22,5 +26,12 @@ namespace CoreEscuela.Entidades
 
         //otra forma de escribir el Constructor utilizando igualacion por tuplas
         public Escuela(string nombre, int anio) => (Nombre, AnioCreacion) = (nombre, anio);
+
+        //sobreescribiendo el metodo ToSting para la clase Escuela
+        public override string ToString()
+        {
+          return $"Nombre: {Nombre}, Tipo: {TipoEscuela}, \nPais: {Pais}, Ciudad: {Ciudad}";
+        }
+
     }
 }
