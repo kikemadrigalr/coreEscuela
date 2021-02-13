@@ -27,10 +27,20 @@ namespace CoreEscuela.Entidades
         //otra forma de escribir el Constructor utilizando igualacion por tuplas
         public Escuela(string nombre, int anio) => (Nombre, AnioCreacion) = (nombre, anio);
 
+        //crear un constructor diferenta, para inicializar el objeto de otra manera
+        //y utilizar parametros opcionales}
+        public Escuela(string nombre, int anio, TiposEscuela tipo, string pais="", string ciudad=""){
+          (Nombre, AnioCreacion) = (nombre, anio);
+          Pais = pais;
+          Ciudad = ciudad;
+        }
+
         //sobreescribiendo el metodo ToSting para la clase Escuela
+        // (\n) nueva linea 
+        //{System.Environment.NewLine} agrega el caracter nueva linea equivalente para el sistema operativo que este en uso
         public override string ToString()
         {
-          return $"Nombre: {Nombre}, Tipo: {TipoEscuela}, \nPais: {Pais}, Ciudad: {Ciudad}";
+          return $"Nombre: \"{Nombre}\", Tipo: {TipoEscuela}, {System.Environment.NewLine}Pais: {Pais}, Ciudad: {Ciudad}";
         }
 
     }
