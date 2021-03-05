@@ -43,18 +43,53 @@ namespace Etapa1
             // Console.WriteLine($"Curso: {curso1.Nombre} - {curso1.UniqueId}");
             // Console.WriteLine($"Curso: {curso2.Nombre} - {curso2.UniqueId}");
             // Console.WriteLine($"Curso: {curso3.Nombre} - {curso3.UniqueId}");
-            ImprimirCursos(arregloCursos);
+            ImprimirCursosWhile(arregloCursos);
+            Console.WriteLine("=================");
+            ImprimirCursosDoWhile(arregloCursos);
+            Console.WriteLine("=================");
+            ImprimirCursosFor(arregloCursos);
+            Console.WriteLine("=================");
+            ImprimirCursosForEach(arregloCursos);
             
         }
 
-    private static void ImprimirCursos(Curso[] arregloCursos)
+    private static void ImprimirCursosWhile(Curso[] arregloCursos)
     {
-        int i = 0;
+      int i = 0;
       while (i < arregloCursos.Length)
       {
-          Console.WriteLine($"Curso: {arregloCursos[i].Nombre}, ID: {arregloCursos[i].UniqueId}");
-          i++;
+        Console.WriteLine($"Curso: {arregloCursos[i].Nombre}, ID: {arregloCursos[i].UniqueId}");
+        i++;
       };
     }
+
+
+    private static void ImprimirCursosDoWhile(Curso[] arregloCursos)
+    {
+      int i = 0;
+      do
+      {
+        Console.WriteLine($"Curso: {arregloCursos[i].Nombre}, ID: {arregloCursos[i].UniqueId}");
+        i++;
+      }while (i < arregloCursos.Length);
+    }
+
+     private static void ImprimirCursosFor(Curso[] arregloCursos)
+    {
+      for (int i = 0; i < arregloCursos.Length; i++)
+      {
+        Console.WriteLine($"Curso: {arregloCursos[i].Nombre}, ID: {arregloCursos[i].UniqueId}");
+      }
+    }
+
+    private static void ImprimirCursosForEach(Curso[] arregloCursos)
+    {
+      foreach (var curso in arregloCursos)
+      {
+        Console.WriteLine($"Curso: {curso.Nombre}, ID: {curso.UniqueId}");
+      }
+    }
+
+
   }
 }
