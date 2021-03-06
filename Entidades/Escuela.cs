@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 namespace CoreEscuela.Entidades
 {
     class Escuela
@@ -13,7 +14,7 @@ namespace CoreEscuela.Entidades
         public int AnioCreacion{ get; set; }
         public string Pais { get; set; }
         public string Ciudad { get; set; }
-        public Curso[] Cursos { get; set; }
+        public List<Curso> Cursos { get; set; }
 
         // la propiedad TipoEscuela sera del TiposEscuelas
         //el cual es un objeto Enumeraable creado a nivel de las entidades

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using System.Threading.Tasks;
+using System.Collections.Generic;
+using System;
 using CoreEscuela.Entidades;
 using static System.Console;
 
@@ -17,14 +19,31 @@ namespace Etapa1
             var escuela2 = new Escuela("Platzi Academy", 2012, TiposEscuela.Primaria, ciudad:"Bogotá");
             Console.WriteLine(escuela2);
 
-            //arreglos
-            escuela.Cursos = new Curso[]{
+            //manejar cursos utilizando colecciones
+            escuela.Cursos = new List<Curso>(){
               new Curso(){Nombre = "101"},
               new Curso(){Nombre = "201"},
               new Curso(){ Nombre = "301"}
             };
 
-            // escuela.Cursos = null;
+            //Agregar miembros a una coleccion
+            escuela.Cursos.Add( new Curso(){ Nombre = "102", Jornada = TiposJornada.Tarde});
+            escuela.Cursos.Add( new Curso(){ Nombre = "202", Jornada = TiposJornada.Tarde});
+
+            var otraColeccion = new List<Curso>(){
+              new Curso(){Nombre = "301", Jornada = TiposJornada.Mañana},
+              new Curso(){Nombre = "401", Jornada = TiposJornada.Mañana},
+              new Curso(){ Nombre = "502", Jornada = TiposJornada.Tarde}
+            };
+
+            //eliminar todos los elementos de una coleccion
+            // otraColeccion.Clear();
+
+            //Eliminar solo un elemento de la coleccion
+            // escuela.Cursos.Remove();
+
+            //addRange agrega una collecion creada anteriormente como parte de na coleccion definida
+            escuela.Cursos.AddRange(otraColeccion);
 
             ImprimirCursosEscuela(escuela);
 
