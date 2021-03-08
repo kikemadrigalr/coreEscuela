@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
 namespace CoreEscuela.Entidades
 {
     public class Escuela
     {
+        public string UniqueId { get; set; } = Guid.NewGuid().ToString();
+      
         string nombre;
         //encapsulamiento de la propiedad nombre
         public string Nombre{
