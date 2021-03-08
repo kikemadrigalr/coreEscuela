@@ -23,7 +23,9 @@ namespace Etapa1
             escuela.Cursos = new List<Curso>(){
               new Curso(){Nombre = "101"},
               new Curso(){Nombre = "201"},
-              new Curso(){ Nombre = "301"}
+              new Curso(){ Nombre = "301"},
+              new Curso(){ Nombre = "501", Jornada = TiposJornada.Mañana},
+              new Curso(){ Nombre = "501", Jornada = TiposJornada.Tarde}
             };
 
             //Agregar miembros a una coleccion
@@ -33,7 +35,8 @@ namespace Etapa1
             var otraColeccion = new List<Curso>(){
               new Curso(){Nombre = "301", Jornada = TiposJornada.Mañana},
               new Curso(){Nombre = "401", Jornada = TiposJornada.Mañana},
-              new Curso(){ Nombre = "502", Jornada = TiposJornada.Tarde}
+              new Curso(){ Nombre = "501", Jornada = TiposJornada.Mañana},
+              new Curso(){ Nombre = "501", Jornada = TiposJornada.Tarde}
             };
 
             Curso tmp = new Curso(){Nombre = "101-Vacacional", Jornada = TiposJornada.Noche};
@@ -51,8 +54,19 @@ namespace Etapa1
             // escuela.Cursos.Remove(tmp);
 
             //eliminacion segura utilizando un delegado
-            Predicate<Curso> eliminarCurso = Predicado;
-            escuela.Cursos.RemoveAll(eliminarCurso);
+            // Predicate<Curso> eliminarCurso = Predicado;
+            // escuela.Cursos.RemoveAll(eliminarCurso);
+
+            //FORMAS DE REESCRIBIR UN DELEGADO
+            //1
+            // escuela.Cursos.RemoveAll(Predicado);
+            //2
+            escuela.Cursos.RemoveAll(delegate(Curso cr){ 
+              return cr.Nombre == "301";
+              });
+            //3 Expresion Lamda
+            escuela.Cursos.RemoveAll(cr => cr.Nombre == "501" && cr.Jornada == TiposJornada.Mañana);
+
 
             //addRange agrega una collecion creada anteriormente como parte de na coleccion definida
             // escuela.Cursos.AddRange(otraColeccion);
