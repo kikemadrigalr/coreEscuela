@@ -36,14 +36,26 @@ namespace Etapa1
               new Curso(){ Nombre = "502", Jornada = TiposJornada.Tarde}
             };
 
+            Curso tmp = new Curso(){Nombre = "101-Vacacional", Jornada = TiposJornada.Noche};
+            escuela.Cursos.Add(tmp);
+
+            //eliminar un curso especifico usadno su referencia
+            ImprimirCursosEscuela(escuela);
+            WriteLine("Curso-Hash Eliminar " + tmp.GetHashCode());
+            WriteLine("********************************************");
+
             //eliminar todos los elementos de una coleccion
             // otraColeccion.Clear();
 
             //Eliminar solo un elemento de la coleccion
-            // escuela.Cursos.Remove();
+            // escuela.Cursos.Remove(tmp);
+
+            //eliminacion segura utilizando un delegado
+            Predicate<Curso> eliminarCurso = Predicado;
+            escuela.Cursos.RemoveAll(eliminarCurso);
 
             //addRange agrega una collecion creada anteriormente como parte de na coleccion definida
-            escuela.Cursos.AddRange(otraColeccion);
+            // escuela.Cursos.AddRange(otraColeccion);
 
             ImprimirCursosEscuela(escuela);
 
@@ -67,6 +79,14 @@ namespace Etapa1
             // ImprimirCursosForEach(arregloCursos);
             
         }
+
+    //Funcion delegado, para hacer una eliminacion segura
+    //en caso de que un hash se encuentre repetido en la coleccion
+    //Se elemina el item que cumpla con la condicion, este metodo debe devolver un bool
+    private static bool Predicado(Curso Cursobj)
+    {
+      return Cursobj.Nombre == "301";
+    }
 
     private static void ImprimirCursosEscuela(Escuela escuela){
       WriteLine("========================");
