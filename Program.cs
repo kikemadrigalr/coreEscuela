@@ -13,23 +13,32 @@ namespace CoreEscuela
         static void Main(string[] args)
         {
           var engine = new EscuelaEngine();
+          var cursosEscuela = new Curso();
           
           engine.Inicializar();
           // Printer.DibujarLinea(20);
           Printer.DibujarTitulo("BIENVENIDOS A LA ESCUELA");
+          mostrarDatosEscuela(engine.Escuela);
           Printer.Timbrar(880,1000);
           Printer.Timbrar(1046,2000);
           ImprimirCursosEscuela(engine.Escuela);
+
+          ImprimirAsignaturasCursos(engine.Escuela);
+
+          // ImprimirEvaluacionesCurso();
+        }
+
+        private static void mostrarDatosEscuela(Escuela escuela){
+          if(escuela != null)
+          {
+            WriteLine(escuela);
+          }
         }
 
     private static void ImprimirCursosEscuela(Escuela escuela){
-      // WriteLine("========================");
-      // WriteLine("==Cursos de la Escuela==");
-      // WriteLine("========================");
 
       Printer.DibujarTitulo("CURSOS DE LA ESCUELA");
 
-      // if (escuela != null && escuela.Cursos != null)
       if(escuela?.Cursos != null)
       {
         foreach (var curso in escuela.Cursos)
@@ -37,6 +46,10 @@ namespace CoreEscuela
           Console.WriteLine($"Curso: {curso.Nombre}, ID: {curso.UniqueId}");
         }
       }
+    }
+
+    private static void ImprimirAsignaturasCursos(Escuela escuela){
+      Printer.DibujarTitulo("Asignaturas de los Cursos");
     }
 
   }

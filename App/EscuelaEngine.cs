@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Collections.Generic;
 using System.Linq;
 using CoreEscuela.Entidades;
+using CoreEscuela.Util;
 
 namespace CoreEscuela
 {
@@ -24,7 +25,6 @@ namespace CoreEscuela
 
       CargarCursos();
       CargarAsignaturas();
-      
       CargarEvaluaciones();
     }
 
@@ -75,6 +75,37 @@ namespace CoreEscuela
         };
       }
       
-      private void CargarEvaluaciones(){}
+      private void CargarEvaluaciones(){
+        int evaluacionesTotales = 5;
+        string[] prueba = { "Parcial", "Final", "Preparatorio", "Quiz", "Acumulativo", "Práctico"};
+
+        Random rnd = new Random();
+        Random nota = new Random();
+
+        foreach (var curso in Escuela.Cursos)
+        {
+          foreach (var asignatura in curso.Asignaturas)
+          {
+            foreach (var alumno in curso.Alumnos)
+            {
+              alumno.Evaluaciones = new List<Evaluacion>();
+
+              for (int i = 0; i < evaluacionesTotales; i++)
+              {
+                int numNombre = rnd.Next(0, 4);
+
+                var evaluacion = new Evaluacion() { 
+                  Nombre = $"{prueba[numNombre] }" + " " + $"{asignatura.Nombre}", 
+                  Alumno = alumno,
+                  Asignatura = asignatura,
+                  Nota = Math.Round(nota.NextDouble() * 5, 2) 
+                };
+
+                alumno.Evaluaciones.Add(evaluacion);
+              }
+            }
+          }
+        }
+      }
   }
 }

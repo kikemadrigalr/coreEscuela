@@ -11,7 +11,7 @@ namespace CoreEscuela.Entidades
 
         public Asignatura Asignatura { get; set; }
 
-        public float Nota { get; set; }
+        public Double Nota { get; set; }
 
         public Evaluacion() => UniqueId = Guid.NewGuid().ToString();
     }
