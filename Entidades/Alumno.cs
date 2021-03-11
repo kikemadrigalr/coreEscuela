@@ -10,6 +10,10 @@ namespace CoreEscuela.Entidades
 
         public List<Evaluacion> Evaluaciones { get; set; }
 
-        public Alumno() => UniqueId = Guid.NewGuid().ToString();
+        public Alumno()
+        {
+          UniqueId = Guid.NewGuid().ToString();
+          Evaluaciones = new List<Evaluacion>(){};
+        }
     }
 }

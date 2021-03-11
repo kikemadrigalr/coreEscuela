@@ -21,7 +21,7 @@ namespace CoreEscuela
 
     public void Inicializar()
     {
-      Escuela = new Escuela("Platzi Academy", 2012, TiposEscuela.Primaria, ciudad:"Bogotá");
+      Escuela = new Escuela("Platzi Academy", 2012, TiposEscuela.Primaria, pais:"Colombia", ciudad:"Bogotá");
 
       CargarCursos();
       CargarAsignaturas();
@@ -88,14 +88,13 @@ namespace CoreEscuela
           {
             foreach (var alumno in curso.Alumnos)
             {
-              alumno.Evaluaciones = new List<Evaluacion>();
-
               for (int i = 0; i < evaluacionesTotales; i++)
               {
-                int numNombre = rnd.Next(0, 4);
+                int numNombre = rnd.Next(0, 6);
 
                 var evaluacion = new Evaluacion() { 
                   Nombre = $"{prueba[numNombre] }" + " " + $"{asignatura.Nombre}", 
+                  // Nombre = $"{asignatura.Nombre} - Evaluacion {prueba[numNombre]}",
                   Alumno = alumno,
                   Asignatura = asignatura,
                   Nota = Math.Round(nota.NextDouble() * 5, 2) 

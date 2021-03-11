@@ -9,7 +9,8 @@ namespace CoreEscuela.Entidades
         string nombre;
         //encapsulamiento de la propiedad nombre
         public string Nombre{
-          get{ return "Copia: " + nombre; }
+          // get{ return "Copia: " + nombre; }
+          get {return nombre; }
           set{ nombre = value.ToUpper(); }
         }
 
