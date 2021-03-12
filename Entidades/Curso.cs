@@ -3,12 +3,12 @@ using System;
 
 namespace CoreEscuela.Entidades
 {
-    public class Curso
+    public class Curso:ObjetoEscuelaBase
     {
         //se hace el get de tipo privado para asignarlo unicamente dentro de la clase
-        public string UniqueId { get; private set; }
+        // public string UniqueId { get; private set; }
 
-        public string Nombre { get; set; }
+        // public string Nombre { get; set; }
 
         public TiposJornada Jornada { get; set; }
 
@@ -17,6 +17,6 @@ namespace CoreEscuela.Entidades
         public List<Alumno> Alumnos { get; set; }
 
 //inicializar id en el constructor 
-        public Curso() => UniqueId = Guid.NewGuid().ToString();
+        // public Curso() => UniqueId = Guid.NewGuid().ToString();
     }
 }

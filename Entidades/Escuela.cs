@@ -2,17 +2,17 @@ using System;
 using System.Collections.Generic;
 namespace CoreEscuela.Entidades
 {
-    public class Escuela
+    public class Escuela:ObjetoEscuelaBase
     {
-        public string UniqueId { get; set; } = Guid.NewGuid().ToString();
+        // public string UniqueId { get; set; } = Guid.NewGuid().ToString();
       
-        string nombre;
+        // string nombre;
         //encapsulamiento de la propiedad nombre
-        public string Nombre{
-          // get{ return "Copia: " + nombre; }
-          get {return nombre; }
-          set{ nombre = value.ToUpper(); }
-        }
+        // public string Nombre{
+        //   // get{ return "Copia: " + nombre; }
+        //   get {return nombre; }
+        //   set{ nombre = value.ToUpper(); }
+        // }
 
         //otra forma de crear y encapsular las propiedades y hacer setter y getter
         public int AnioCreacion{ get; set; }

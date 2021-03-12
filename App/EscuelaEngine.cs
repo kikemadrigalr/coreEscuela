@@ -10,7 +10,8 @@ using CoreEscuela.Util;
 
 namespace CoreEscuela
 {
-  public class EscuelaEngine
+  //sealed indica que la clase puede ser instanciada pero no se puede heredar de ella en otra clase
+  public sealed class EscuelaEngine
   {
     public Escuela Escuela { get; set; }
     

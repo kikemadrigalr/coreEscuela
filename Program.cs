@@ -13,19 +13,18 @@ namespace CoreEscuela
         static void Main(string[] args)
         {
           var engine = new EscuelaEngine();
-          var cursosEscuela = new Curso();
-          var alumno = new Alumno();
           
           engine.Inicializar();
-          // Printer.DibujarLinea(20);
           Printer.DibujarTitulo($"BIENVENIDOS A LA ESCUELA {engine.Escuela.Nombre}");
           mostrarDatosEscuela(engine.Escuela);
           // Printer.Timbrar(880,1000);
           // Printer.Timbrar(1046,2000);
           ImprimirCursosEscuela(engine.Escuela);
-
           ImprimirInformacionCursosAlumnos(engine.Escuela);
           ImprimirInformacionAlumnosEvaluaciones(engine.Escuela);
+
+          //como la clase ObjetoEscuelaBase es abstracta no se puede instanciar
+          // var obj = new ObjetoEscuelaBase();
         }
 
         private static void mostrarDatosEscuela(Escuela escuela){
