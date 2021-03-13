@@ -64,7 +64,7 @@ namespace CoreEscuela
           WriteLine($"Evaluacion: {evaluacion.Nota}");
           WriteLine($"Evaluacion: {evaluacion.GetType()}");
 
-          ob = evaluacion;
+          // ob = evaluacion;
           Printer.DibujarTitulo("Objeto Escuela");
           WriteLine($"Alumno: {ob.Nombre}");
           WriteLine($"Alumno: {ob.UniqueId}");
@@ -72,7 +72,23 @@ namespace CoreEscuela
 
           //Intento de hacer castin para convertir evaluacion en alumno
           //falla en momento de compilacion
-          alumnoTest = (Alumno)(ObjetoEscuelaBase)evaluacion;
+          // alumnoTest = (Alumno)(ObjetoEscuelaBase)evaluacion;
+
+          //validar que un objeto es de un tipo especifico con (is, as)
+          //is
+          if(ob is Alumno){
+            var alumnoRecuperado = (Alumno)ob;
+          }
+
+          //as
+          // si ob lo puede recuperar como alumno lo hace y la asigna
+          //sino devuelve null
+          var alumnoRecuperado2 = ob as Alumno;
+
+          if(alumnoRecuperado2 != null){
+            WriteLine("Datos del Alumno");
+
+          }
 
 
         }

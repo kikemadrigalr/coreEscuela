@@ -27,6 +27,7 @@ namespace CoreEscuela
       CargarCursos();
       CargarAsignaturas();
       CargarEvaluaciones();
+      var ObjetosEscuela = getObjetosEscuela();
     }
 
       private void CargarCursos(){
@@ -106,6 +107,26 @@ namespace CoreEscuela
             }
           }
         }
+      }
+
+      public List<ObjetoEscuelaBase> getObjetosEscuela(){
+        var listaObjetos = new List<ObjetoEscuelaBase>();
+
+        listaObjetos.Add(Escuela);
+        listaObjetos.AddRange(Escuela.Cursos);
+
+        foreach (var curso in Escuela.Cursos)
+        {
+          listaObjetos.AddRange(curso.Asignaturas);
+          listaObjetos.AddRange(curso.Alumnos);
+
+          foreach (var alumno in curso.Alumnos)
+          {
+            listaObjetos.AddRange(alumno.Evaluaciones);
+          }
+        }
+        
+        return listaObjetos;
       }
   }
 }

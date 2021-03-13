@@ -13,6 +13,9 @@ namespace CoreEscuela.Entidades
 
         public Double Nota { get; set; }
 
-        // public Evaluacion() => UniqueId = Guid.NewGuid().ToString();
+         public override string ToString()
+        {
+            return $"{Nota}, {Alumno.Nombre}, {Asignatura.Nombre}";
+        }
     }
 }
