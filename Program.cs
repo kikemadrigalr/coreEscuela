@@ -25,6 +25,56 @@ namespace CoreEscuela
 
           //como la clase ObjetoEscuelaBase es abstracta no se puede instanciar
           // var obj = new ObjetoEscuelaBase();
+          Printer.DibujarLinea(50);
+          Printer.DibujarTitulo("Pruebas de Polimorfismo");
+
+          var alumnoTest = new Alumno(){Nombre = "Tony Stark"};
+
+          Printer.DibujarTitulo("Alumno");
+          WriteLine($"Alumno: {alumnoTest.Nombre}");
+          WriteLine($"Alumno: {alumnoTest.UniqueId}");
+          WriteLine($"Alumno: {alumnoTest.GetType()}");
+
+          ObjetoEscuelaBase ob = alumnoTest;
+          Printer.DibujarTitulo("Objeto Escuela Base");
+          WriteLine($"Alumno: {ob.Nombre}");
+          WriteLine($"Alumno: {ob.UniqueId}");
+          WriteLine($"Alumno: {ob.GetType()}");
+
+          
+          var objetoDummy = new ObjetoEscuelaBase(){Nombre = "Steve Rogers"};
+          Printer.DibujarTitulo("Objeto Dummy Escuela Base");
+          WriteLine($"Alumno: {objetoDummy.Nombre}");
+          WriteLine($"Alumno: {objetoDummy.UniqueId}");
+          WriteLine($"Alumno: {objetoDummy.GetType()}");
+
+          //Aunque ambos heredan de objetoEscuela
+          //el cmpilador detecta que son tipos diferentes
+          //Con el casting el compilador entiende que son similares pero falla al momento de ejecutar
+          // alumnoTest = (Alumno)objetoDummy;
+          Printer.DibujarTitulo("Objeto Alumno");
+          WriteLine($"Alumno: {alumnoTest.Nombre}");
+          WriteLine($"Alumno: {alumnoTest.UniqueId}");
+          WriteLine($"Alumno: {alumnoTest.GetType()}");
+
+          var evaluacion = new Evaluacion(){Nombre = "Evaluacion MAth", Nota=4.5f};
+          Printer.DibujarTitulo("Evaluacion");
+          WriteLine($"Evaluacion: {evaluacion.Nombre}");
+          WriteLine($"Evaluacion: {evaluacion.UniqueId}");
+          WriteLine($"Evaluacion: {evaluacion.Nota}");
+          WriteLine($"Evaluacion: {evaluacion.GetType()}");
+
+          ob = evaluacion;
+          Printer.DibujarTitulo("Objeto Escuela");
+          WriteLine($"Alumno: {ob.Nombre}");
+          WriteLine($"Alumno: {ob.UniqueId}");
+          WriteLine($"Alumno: {ob.GetType()}");
+
+          //Intento de hacer castin para convertir evaluacion en alumno
+          //falla en momento de compilacion
+          alumnoTest = (Alumno)(ObjetoEscuelaBase)evaluacion;
+
+
         }
 
         private static void mostrarDatosEscuela(Escuela escuela){
