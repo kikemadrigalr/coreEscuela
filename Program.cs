@@ -93,15 +93,26 @@ namespace CoreEscuela
 
           // engine.Escuela.LimpiarLugar();
           
-          var ListaObjetosEscuela = engine.getObjetosEscuela();
+
+          //para ejecutar una funcion con parametros de salida, 
+          //siempre deben marcarse cuales son los parametros de salida con la palabra reservada out
+          //para evitar pasar todos los parametros de salida, se puede pasar una variable dummy
+          //como señuelo para el metodo pero indica que no retornara nada
+          int dummy = 0;
+          var ListaObjetosEscuela = engine.getObjetosEscuela(
+            out int conteoEvaluaciones, out int conteoAlumnos, out int conteoAsignaturas, out int conteoCursos
+            );
+
+
           //obtener lista de objetos que implementen la interfaz ILugar con Linq
           //utilizando (is para especificar que se buscan objetos tipo ILugar)
           //y casting para ver los objetos obtenidos como ILugar
-          var listaIlugar = from obj in ListaObjetosEscuela
-                            where obj is ILugar
-                            select (ILugar)obj ; 
+          // var listaIlugar = from obj in ListaObjetosEscuela
+          //                   where obj is ILugar
+          //                   select (ILugar)obj ; 
 
         }
+
 #region Mostrar Informacion Escuela
         private static void mostrarDatosEscuela(Escuela escuela){
           if(escuela != null)
@@ -165,6 +176,6 @@ namespace CoreEscuela
       }
     }
     #endregion
-    
+
   }
 }

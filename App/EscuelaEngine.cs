@@ -30,25 +30,101 @@ namespace CoreEscuela
       // var ObjetosEscuela = getObjetosEscuela();
     }
 
-      public List<ObjetoEscuelaBase> getObjetosEscuela(){
-        var listaObjetos = new List<ObjetoEscuelaBase>();
+#region Lista Objestos de la escuela
 
-        listaObjetos.Add(Escuela);
-        listaObjetos.AddRange(Escuela.Cursos);
+//reesribiendo metodo para utilizar parametros opciones y definir parametros de salida
+public List<ObjetoEscuelaBase> getObjetosEscuela(
+  out int conteoEvaluaciones, out int conteoAlumnos, out int conteoAsignaturas, out int conteoCursos,
+  bool traerEvaluaciones = true, bool traerAlumnos = true, bool traerAsignaturas = true, bool traerCursos = true
+  ){
+    var listaObjetos = new List<ObjetoEscuelaBase>();
+    conteoAlumnos = conteoAsignaturas =  conteoEvaluaciones = 0;
 
-        foreach (var curso in Escuela.Cursos)
+    listaObjetos.Add(Escuela);
+
+    if(traerCursos)
+      listaObjetos.AddRange(Escuela.Cursos);
+
+    conteoCursos = Escuela.Cursos.Count;
+    foreach (var curso in Escuela.Cursos)
+    {
+      conteoAsignaturas += curso.Asignaturas.Count;
+      conteoAlumnos += curso.Alumnos.Count;
+
+      if(traerAsignaturas)
+        listaObjetos.AddRange(curso.Asignaturas);
+
+      if(traerAlumnos)
+        listaObjetos.AddRange(curso.Alumnos);
+
+      if (traerEvaluaciones)
+      {
+        foreach (var alumno in curso.Alumnos)
         {
-          listaObjetos.AddRange(curso.Asignaturas);
-          listaObjetos.AddRange(curso.Alumnos);
-
-          foreach (var alumno in curso.Alumnos)
-          {
-            listaObjetos.AddRange(alumno.Evaluaciones);
-          }
+          listaObjetos.AddRange(alumno.Evaluaciones);
+          conteoEvaluaciones += alumno.Evaluaciones.Count;
         }
-        
-        return listaObjetos;
       }
+      
+    }
+        
+    return listaObjetos;
+  }
+
+
+
+//reescribiendo el metodo getObjetosEscuela para utilizar parametros opcionales dependiendo de los objetos que quiero recuperar
+//y definir parametros de salida para que devuelva mas de un objeto
+  // public (List<ObjetoEscuelaBase>, int) getObjetosEscuela(bool traerEvaluaciones = true, bool traerAlumnos = true, bool traerAsignaturas = true, bool traerCursos = true){
+  //   var listaObjetos = new List<ObjetoEscuelaBase>();
+  //   int conteoEvaluaciones = 0;
+
+  //   listaObjetos.Add(Escuela);
+
+  //   if(traerCursos)
+  //     listaObjetos.AddRange(Escuela.Cursos);
+
+  //   foreach (var curso in Escuela.Cursos)
+  //   {
+  //     if(traerAsignaturas)
+  //       listaObjetos.AddRange(curso.Asignaturas);
+
+  //     if(traerAlumnos)
+  //       listaObjetos.AddRange(curso.Alumnos);
+
+  //     if (traerEvaluaciones)
+  //     {
+  //       foreach (var alumno in curso.Alumnos)
+  //       {
+  //         listaObjetos.AddRange(alumno.Evaluaciones);
+  //         conteoEvaluaciones += alumno.Evaluaciones.Count;
+  //       }
+  //     }
+      
+  //   }
+        
+  //   return (listaObjetos, conteoEvaluaciones);
+  // }
+      // public List<ObjetoEscuelaBase> getObjetosEscuela(){
+      //   var listaObjetos = new List<ObjetoEscuelaBase>();
+
+      //   listaObjetos.Add(Escuela);
+      //   listaObjetos.AddRange(Escuela.Cursos);
+
+      //   foreach (var curso in Escuela.Cursos)
+      //   {
+      //     listaObjetos.AddRange(curso.Asignaturas);
+      //     listaObjetos.AddRange(curso.Alumnos);
+
+      //     foreach (var alumno in curso.Alumnos)
+      //     {
+      //       listaObjetos.AddRange(alumno.Evaluaciones);
+      //     }
+      //   }
+        
+      //   return listaObjetos;
+      // }
+#endregion
 
 #region Metodos de Carga
       private void CargarCursos(){
