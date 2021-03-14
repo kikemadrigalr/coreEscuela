@@ -1,10 +1,13 @@
 using System;
-
+using System.Diagnostics;
 namespace CoreEscuela.Entidades
-{
+{   
+    //enviar informacion al debuger
+    // [DebuggerDisplay("{Nota}, {Alumno.Nombre}, {Asignatura.Nombre}")]
+    
     //declarar la clase como abstract permite heredar sus caracteristicas a otras clases
     //pero no permite que la clase sea instanciada
-    public class ObjetoEscuelaBase
+    public abstract class ObjetoEscuelaBase
     {
         public string UniqueId { get; private set; }
 

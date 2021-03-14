@@ -27,9 +27,30 @@ namespace CoreEscuela
       CargarCursos();
       CargarAsignaturas();
       CargarEvaluaciones();
-      var ObjetosEscuela = getObjetosEscuela();
+      // var ObjetosEscuela = getObjetosEscuela();
     }
 
+      public List<ObjetoEscuelaBase> getObjetosEscuela(){
+        var listaObjetos = new List<ObjetoEscuelaBase>();
+
+        listaObjetos.Add(Escuela);
+        listaObjetos.AddRange(Escuela.Cursos);
+
+        foreach (var curso in Escuela.Cursos)
+        {
+          listaObjetos.AddRange(curso.Asignaturas);
+          listaObjetos.AddRange(curso.Alumnos);
+
+          foreach (var alumno in curso.Alumnos)
+          {
+            listaObjetos.AddRange(alumno.Evaluaciones);
+          }
+        }
+        
+        return listaObjetos;
+      }
+
+#region Metodos de Carga
       private void CargarCursos(){
         Escuela.Cursos = new List<Curso>(){
           new Curso(){ Nombre = "101", Jornada = TiposJornada.Mañana},
@@ -108,25 +129,6 @@ namespace CoreEscuela
           }
         }
       }
-
-      public List<ObjetoEscuelaBase> getObjetosEscuela(){
-        var listaObjetos = new List<ObjetoEscuelaBase>();
-
-        listaObjetos.Add(Escuela);
-        listaObjetos.AddRange(Escuela.Cursos);
-
-        foreach (var curso in Escuela.Cursos)
-        {
-          listaObjetos.AddRange(curso.Asignaturas);
-          listaObjetos.AddRange(curso.Alumnos);
-
-          foreach (var alumno in curso.Alumnos)
-          {
-            listaObjetos.AddRange(alumno.Evaluaciones);
-          }
-        }
-        
-        return listaObjetos;
-      }
+#endregion
   }
 }
