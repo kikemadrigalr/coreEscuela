@@ -32,6 +32,46 @@ namespace CoreEscuela
 
 #region Lista Objestos de la escuela
 
+//SOBRECARGAS DEL METODO PARA OBTENER LISTA DE OBJETOS DE LA 
+//MODFICANDO LOSPARAMETROS DE SALIDA
+
+//ESTA SOBRECARGA NO RECIBE PARAMETROS DE SALIDA
+public List<ObjetoEscuelaBase> getObjetosEscuela(
+  bool traerEvaluaciones = true, bool traerAlumnos = true, bool traerAsignaturas = true, bool traerCursos = true
+  ){
+    return getObjetosEscuela(out int dummy, out dummy, out dummy, out dummy);
+}
+
+//ESTA SOBRECARGA RECIBE UN PARAMETRO DE SALIDA 
+//CONTEO DE EVALUACIONES
+public List<ObjetoEscuelaBase> getObjetosEscuela(
+  bool traerEvaluaciones = true, bool traerAlumnos = true, bool traerAsignaturas = true, bool traerCursos = true
+  ){
+    return getObjetosEscuela(out int conteoEvaluaciones, out int dummy, out dummy, out dummy);
+}
+
+//SOBRECARGA PARA RECIBIR EL PARAMETRO DE SALIDA CONTEO DE EVALUACIONES Y ALUMNOS
+public List<ObjetoEscuelaBase> getObjetosEscuela(
+  bool traerEvaluaciones = true, bool traerAlumnos = true, bool traerAsignaturas = true, bool traerCursos = true
+  ){
+    return getObjetosEscuela(out int conteoEvaluaciones, out int conteoAlumnos, out int dummy, out dummy);
+}
+
+
+//SOBRECARGA PARA RECIBIR EL PARAMETRO DE SALIDA CONTEO DE EVALUACIONES , ALUMNOS ASIGNATURAS
+public List<ObjetoEscuelaBase> getObjetosEscuela(
+  bool traerEvaluaciones = true, bool traerAlumnos = true, bool traerAsignaturas = true, bool traerCursos = true
+  ){
+    return getObjetosEscuela(out int conteoEvaluaciones, out int conteoAlumnos, out int conteoAsignaturas, out int dummy);
+}
+
+//SOBRECARGA PARA RECIBIR EL PARAMETRO DE SALIDA CONTEO DE EVALUACIONES , ALUMNOS, ASIGNATURAS, CURSOS
+public List<ObjetoEscuelaBase> getObjetosEscuela(
+  bool traerEvaluaciones = true, bool traerAlumnos = true, bool traerAsignaturas = true, bool traerCursos = true
+  ){
+    return getObjetosEscuela(out int conteoEvaluaciones, out int conteoAlumnos, out int conteoAsignaturas, out int conteoCursos);
+}
+
 //reesribiendo metodo para utilizar parametros opciones y definir parametros de salida
 public List<ObjetoEscuelaBase> getObjetosEscuela(
   out int conteoEvaluaciones, out int conteoAlumnos, out int conteoAsignaturas, out int conteoCursos,

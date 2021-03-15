@@ -99,9 +99,10 @@ namespace CoreEscuela
           //para evitar pasar todos los parametros de salida, se puede pasar una variable dummy
           //como señuelo para el metodo pero indica que no retornara nada
           int dummy = 0;
-          var ListaObjetosEscuela = engine.getObjetosEscuela(
-            out int conteoEvaluaciones, out int conteoAlumnos, out int conteoAsignaturas, out int conteoCursos
-            );
+          // var ListaObjetosEscuela = engine.getObjetosEscuela(
+          //   out int conteoEvaluaciones, out int conteoAlumnos, out int conteoAsignaturas, out int conteoCursos
+          //   );
+          var ListaObjetosEscuela = engine.getObjetosEscuela(() );
 
 
           //obtener lista de objetos que implementen la interfaz ILugar con Linq
