@@ -36,7 +36,7 @@ namespace CoreEscuela
 //MODFICANDO LOSPARAMETROS DE SALIDA
 
 //ESTA SOBRECARGA NO RECIBE PARAMETROS DE SALIDA
-public List<ObjetoEscuelaBase> getObjetosEscuela(
+public IReadOnlyList<ObjetoEscuelaBase> getObjetosEscuela(
   bool traerEvaluaciones = true, bool traerAlumnos = true, bool traerAsignaturas = true, bool traerCursos = true
   ){
     return getObjetosEscuela(out int dummy, out dummy, out dummy, out dummy);
@@ -44,36 +44,46 @@ public List<ObjetoEscuelaBase> getObjetosEscuela(
 
 //ESTA SOBRECARGA RECIBE UN PARAMETRO DE SALIDA 
 //CONTEO DE EVALUACIONES
-public List<ObjetoEscuelaBase> getObjetosEscuela(
+public IReadOnlyList<ObjetoEscuelaBase> getObjetosEscuela(
+  out int conteoEvaluaciones,
   bool traerEvaluaciones = true, bool traerAlumnos = true, bool traerAsignaturas = true, bool traerCursos = true
   ){
-    return getObjetosEscuela(out int conteoEvaluaciones, out int dummy, out dummy, out dummy);
+    return getObjetosEscuela(out conteoEvaluaciones, out int dummy, out dummy, out dummy);
 }
 
 //SOBRECARGA PARA RECIBIR EL PARAMETRO DE SALIDA CONTEO DE EVALUACIONES Y ALUMNOS
-public List<ObjetoEscuelaBase> getObjetosEscuela(
+public IReadOnlyList<ObjetoEscuelaBase> getObjetosEscuela(
+  out int conteoEvaluaciones, out int conteoAsignaturas,
   bool traerEvaluaciones = true, bool traerAlumnos = true, bool traerAsignaturas = true, bool traerCursos = true
   ){
-    return getObjetosEscuela(out int conteoEvaluaciones, out int conteoAlumnos, out int dummy, out dummy);
+    return getObjetosEscuela(out conteoEvaluaciones, out conteoAsignaturas, out int dummy, out dummy);
 }
 
 
 //SOBRECARGA PARA RECIBIR EL PARAMETRO DE SALIDA CONTEO DE EVALUACIONES , ALUMNOS ASIGNATURAS
-public List<ObjetoEscuelaBase> getObjetosEscuela(
+public IReadOnlyList<ObjetoEscuelaBase> getObjetosEscuela(
+  out int conteoEvaluaciones,out int conteoAsignaturas, out int conteoCursos,
   bool traerEvaluaciones = true, bool traerAlumnos = true, bool traerAsignaturas = true, bool traerCursos = true
   ){
-    return getObjetosEscuela(out int conteoEvaluaciones, out int conteoAlumnos, out int conteoAsignaturas, out int dummy);
+    return getObjetosEscuela(out conteoEvaluaciones, out conteoAsignaturas, out conteoCursos, out int dummy);
 }
 
-//SOBRECARGA PARA RECIBIR EL PARAMETRO DE SALIDA CONTEO DE EVALUACIONES , ALUMNOS, ASIGNATURAS, CURSOS
-public List<ObjetoEscuelaBase> getObjetosEscuela(
-  bool traerEvaluaciones = true, bool traerAlumnos = true, bool traerAsignaturas = true, bool traerCursos = true
-  ){
-    return getObjetosEscuela(out int conteoEvaluaciones, out int conteoAlumnos, out int conteoAsignaturas, out int conteoCursos);
-}
+// //SOBRECARGA PARA RECIBIR EL PARAMETRO DE SALIDA CONTEO DE EVALUACIONES , ALUMNOS, ASIGNATURAS, CURSOS
+// public List<ObjetoEscuelaBase> getObjetosEscuela(
+//   out int conteoEvaluaciones, out int conteoAlumnos, out int conteoAsignaturas, out int conteoCursos,
+//   bool traerEvaluaciones = true, bool traerAlumnos = true, bool traerAsignaturas = true, bool traerCursos = true
+//   ){
+//     return getObjetosEscuela(out conteoEvaluaciones, out conteoAlumnos, out conteoAsignaturas, out conteoCursos);
+// }
+
+//utilizar listas de solo lectura para valores de etorno tipo List
+//esto evita que se creen objetos de un tipo en especifico sin pasar por la estructura definida de la escuela
+//ES DECIR NO SE PODRN CREAR OBJETOS CURSOS; EVALUACIONES ALUMNOS FUERA DE LA ESTRUCTURA DE LA ESCUELA
+//NO SE PUEDEN ADICIONAR MIEMBROS A LISTAS QUE SON DE SOLO LECTURA
 
 //reesribiendo metodo para utilizar parametros opciones y definir parametros de salida
-public List<ObjetoEscuelaBase> getObjetosEscuela(
+// public List<ObjetoEscuelaBase> getObjetosEscuela(
+public IReadOnlyList<ObjetoEscuelaBase> getObjetosEscuela(
   out int conteoEvaluaciones, out int conteoAlumnos, out int conteoAsignaturas, out int conteoCursos,
   bool traerEvaluaciones = true, bool traerAlumnos = true, bool traerAsignaturas = true, bool traerCursos = true
   ){
@@ -108,7 +118,7 @@ public List<ObjetoEscuelaBase> getObjetosEscuela(
       
     }
         
-    return listaObjetos;
+    return listaObjetos.AsReadOnly();
   }
 
 

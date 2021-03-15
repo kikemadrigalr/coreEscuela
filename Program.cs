@@ -102,7 +102,7 @@ namespace CoreEscuela
           // var ListaObjetosEscuela = engine.getObjetosEscuela(
           //   out int conteoEvaluaciones, out int conteoAlumnos, out int conteoAsignaturas, out int conteoCursos
           //   );
-          var ListaObjetosEscuela = engine.getObjetosEscuela(() );
+          var ListaObjetosEscuela = engine.getObjetosEscuela(());
 
 
           //obtener lista de objetos que implementen la interfaz ILugar con Linq
