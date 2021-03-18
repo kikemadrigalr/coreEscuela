@@ -21,8 +21,8 @@ namespace CoreEscuela
           // Printer.Timbrar(880,1000);
           // Printer.Timbrar(1046,2000);
           ImprimirCursosEscuela(engine.Escuela);
-          ImprimirInformacionCursosAlumnos(engine.Escuela);
-          ImprimirInformacionAlumnosEvaluaciones(engine.Escuela);
+          //ImprimirInformacionCursosAlumnos(engine.Escuela);
+          //ImprimirInformacionAlumnosEvaluaciones(engine.Escuela);
 
           //como la clase ObjetoEscuelaBase es abstracta no se puede instanciar
           // var obj = new ObjetoEscuelaBase();
@@ -98,11 +98,11 @@ namespace CoreEscuela
           //siempre deben marcarse cuales son los parametros de salida con la palabra reservada out
           //para evitar pasar todos los parametros de salida, se puede pasar una variable dummy
           //como señuelo para el metodo pero indica que no retornara nada
-          int dummy = 0;
+          // int dummy = 0;
           // var ListaObjetosEscuela = engine.getObjetosEscuela(
           //   out int conteoEvaluaciones, out int conteoAlumnos, out int conteoAsignaturas, out int conteoCursos
           //   );
-          var ListaObjetosEscuela = engine.getObjetosEscuela(());
+          // var ListaObjetosEscuela = engine.getObjetosEscuela(());
 
 
           //obtener lista de objetos que implementen la interfaz ILugar con Linq
@@ -111,6 +111,32 @@ namespace CoreEscuela
           // var listaIlugar = from obj in ListaObjetosEscuela
           //                   where obj is ILugar
           //                   select (ILugar)obj ; 
+          
+           //TRABAJAR CON DICCIONARIOS
+            Dictionary<int, string> diccionario = new Dictionary<int, string>();
+
+            //agregar elementos al diccionario
+            diccionario.Add(7, "KIKEMADRIGAL");
+            diccionario.Add(23, "DUALIPA");
+
+            //recorrer diccionarios
+            //Las llaves de los diccionarios no pueden repetirse
+            foreach (var keyValPair in diccionario)
+            {
+              WriteLine($"Llave: {keyValPair.Key}, Valor: {keyValPair.Value}");
+            }
+
+            Printer.DibujarTitulo("Acceso a Diccionarios");
+            diccionario[0] = "Harley Queen";
+            WriteLine(diccionario[23]);
+            WriteLine(diccionario[0]);
+
+            Printer.DibujarTitulo("Otro Diccionario");
+            var dicc = new Dictionary<string, string>();
+            dicc["Luna"] = "Cuerpo Celeste que gira al rededor de la tierra";
+            WriteLine(dicc["Luna"]);
+            dicc["Luna"] = "Protagonista de Soy Luna";
+            WriteLine(dicc["Luna"]);
 
         }
 
