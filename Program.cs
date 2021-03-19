@@ -113,30 +113,30 @@ namespace CoreEscuela
           //                   select (ILugar)obj ; 
           
            //TRABAJAR CON DICCIONARIOS
-            Dictionary<int, string> diccionario = new Dictionary<int, string>();
+            // Dictionary<int, string> diccionario = new Dictionary<int, string>();
 
-            //agregar elementos al diccionario
-            diccionario.Add(7, "KIKEMADRIGAL");
-            diccionario.Add(23, "DUALIPA");
+            // //agregar elementos al diccionario
+            // diccionario.Add(7, "KIKEMADRIGAL");
+            // diccionario.Add(23, "DUALIPA");
 
-            //recorrer diccionarios
-            //Las llaves de los diccionarios no pueden repetirse
-            foreach (var keyValPair in diccionario)
-            {
-              WriteLine($"Llave: {keyValPair.Key}, Valor: {keyValPair.Value}");
-            }
+            // //recorrer diccionarios
+            // //Las llaves de los diccionarios no pueden repetirse
+            // foreach (var keyValPair in diccionario)
+            // {
+            //   WriteLine($"Llave: {keyValPair.Key}, Valor: {keyValPair.Value}");
+            // }
 
-            Printer.DibujarTitulo("Acceso a Diccionarios");
-            diccionario[0] = "Harley Queen";
-            WriteLine(diccionario[23]);
-            WriteLine(diccionario[0]);
+            // Printer.DibujarTitulo("Acceso a Diccionarios");
+            // diccionario[0] = "Harley Queen";
+            // WriteLine(diccionario[23]);
+            // WriteLine(diccionario[0]);
 
-            Printer.DibujarTitulo("Otro Diccionario");
-            var dicc = new Dictionary<string, string>();
-            dicc["Luna"] = "Cuerpo Celeste que gira al rededor de la tierra";
-            WriteLine(dicc["Luna"]);
-            dicc["Luna"] = "Protagonista de Soy Luna";
-            WriteLine(dicc["Luna"]);
+            // Printer.DibujarTitulo("Otro Diccionario");
+            // var dicc = new Dictionary<string, string>();
+            // dicc["Luna"] = "Cuerpo Celeste que gira al rededor de la tierra";
+            // WriteLine(dicc["Luna"]);
+            // dicc["Luna"] = "Protagonista de Soy Luna";
+            // WriteLine(dicc["Luna"]);
 
         }
 

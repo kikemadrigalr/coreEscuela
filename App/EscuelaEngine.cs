@@ -30,6 +30,23 @@ namespace CoreEscuela
       // var ObjetosEscuela = getObjetosEscuela();
     }
 
+#region Diccionario 
+//este diccionario almacenara una lista de objetos en cada llave
+//esta lista esta definida como IEnumerable de <ObjetoEscuelaBase>
+  public Dictionary<string, IEnumerable<ObjetoEscuelaBase>> GetDiccionarioObjetos(){
+    var diccionario = new Dictionary<string, IEnumerable<ObjetoEscuelaBase>>();
+
+    //se convierte en arreglo para que sea Ienumerable
+    diccionario.Add("Escuela", new[] {Escuela}); 
+    // se agrega un arreglo de Objetos escuela haciendo cast a objetos escuela bases, ya que cursos heredad de elle
+    // diccionario.Add("Cursos", Escuela.Cursos.Cast<ObjetoEscuelaBase>()); 
+    //se resume asi ya que Cursos es un list y por ende IEnumerable
+    diccionario.Add("Cursos", Escuela.Cursos);
+
+    return diccionario;
+  }
+#endregion
+
 #region Lista Objestos de la escuela
 
 //SOBRECARGAS DEL METODO PARA OBTENER LISTA DE OBJETOS DE LA 
