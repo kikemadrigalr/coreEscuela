@@ -20,27 +20,27 @@ namespace CoreEscuela
           mostrarDatosEscuela(engine.Escuela);
           // Printer.Timbrar(880,1000);
           // Printer.Timbrar(1046,2000);
-          ImprimirCursosEscuela(engine.Escuela);
+          // ImprimirCursosEscuela(engine.Escuela);
           //ImprimirInformacionCursosAlumnos(engine.Escuela);
           //ImprimirInformacionAlumnosEvaluaciones(engine.Escuela);
 
           //como la clase ObjetoEscuelaBase es abstracta no se puede instanciar
           // var obj = new ObjetoEscuelaBase();
-          Printer.DibujarLinea(50);
-          Printer.DibujarTitulo("Pruebas de Polimorfismo");
+          // Printer.DibujarLinea(50);
+          // Printer.DibujarTitulo("Pruebas de Polimorfismo");
 
           var alumnoTest = new Alumno(){Nombre = "Tony Stark"};
 
-          Printer.DibujarTitulo("Alumno");
-          WriteLine($"Alumno: {alumnoTest.Nombre}");
-          WriteLine($"Alumno: {alumnoTest.UniqueId}");
-          WriteLine($"Alumno: {alumnoTest.GetType()}");
+          // Printer.DibujarTitulo("Alumno");
+          // WriteLine($"Alumno: {alumnoTest.Nombre}");
+          // WriteLine($"Alumno: {alumnoTest.UniqueId}");
+          // WriteLine($"Alumno: {alumnoTest.GetType()}");
 
           ObjetoEscuelaBase ob = alumnoTest;
-          Printer.DibujarTitulo("Objeto Escuela Base");
-          WriteLine($"Alumno: {ob.Nombre}");
-          WriteLine($"Alumno: {ob.UniqueId}");
-          WriteLine($"Alumno: {ob.GetType()}");
+          // Printer.DibujarTitulo("Objeto Escuela Base");
+          // WriteLine($"Alumno: {ob.Nombre}");
+          // WriteLine($"Alumno: {ob.UniqueId}");
+          // WriteLine($"Alumno: {ob.GetType()}");
 
           //Clase abstracta por lo tanto no se puede instanciar
           // var objetoDummy = new ObjetoEscuelaBase(){Nombre = "Steve Rogers"};
@@ -54,22 +54,22 @@ namespace CoreEscuela
           //Con el casting el compilador entiende que son similares pero falla al momento de ejecutar
           // alumnoTest = (Alumno)objetoDummy;
           Printer.DibujarTitulo("Objeto Alumno");
-          WriteLine($"Alumno: {alumnoTest.Nombre}");
-          WriteLine($"Alumno: {alumnoTest.UniqueId}");
-          WriteLine($"Alumno: {alumnoTest.GetType()}");
+          // WriteLine($"Alumno: {alumnoTest.Nombre}");
+          // WriteLine($"Alumno: {alumnoTest.UniqueId}");
+          // WriteLine($"Alumno: {alumnoTest.GetType()}");
 
           var evaluacion = new Evaluacion(){Nombre = "Evaluacion MAth", Nota=4.5f};
-          Printer.DibujarTitulo("Evaluacion");
-          WriteLine($"Evaluacion: {evaluacion.Nombre}");
-          WriteLine($"Evaluacion: {evaluacion.UniqueId}");
-          WriteLine($"Evaluacion: {evaluacion.Nota}");
-          WriteLine($"Evaluacion: {evaluacion.GetType()}");
+          // Printer.DibujarTitulo("Evaluacion");
+          // WriteLine($"Evaluacion: {evaluacion.Nombre}");
+          // WriteLine($"Evaluacion: {evaluacion.UniqueId}");
+          // WriteLine($"Evaluacion: {evaluacion.Nota}");
+          // WriteLine($"Evaluacion: {evaluacion.GetType()}");
 
           // ob = evaluacion;
-          Printer.DibujarTitulo("Objeto Escuela");
-          WriteLine($"Alumno: {ob.Nombre}");
-          WriteLine($"Alumno: {ob.UniqueId}");
-          WriteLine($"Alumno: {ob.GetType()}");
+          // Printer.DibujarTitulo("Objeto Escuela");
+          // WriteLine($"Alumno: {ob.Nombre}");
+          // WriteLine($"Alumno: {ob.UniqueId}");
+          // WriteLine($"Alumno: {ob.GetType()}");
 
           //Intento de hacer castin para convertir evaluacion en alumno
           //falla en momento de compilacion

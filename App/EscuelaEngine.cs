@@ -65,26 +65,54 @@ namespace CoreEscuela
   }
 
   public void ImprimirDiccionario(Dictionary<LlaveDiccionario, IEnumerable<ObjetoEscuelaBase>> dic, bool ImprimirEval = false){
-    foreach (var obj in dic)
+    foreach (var item in dic)
     {
-      Printer.DibujarTitulo(obj.Key.ToString());
+      Printer.DibujarTitulo(item.Key.ToString());
 
-      foreach (var val in obj.Value)
+      foreach (var val in item.Value)
       {
-        if(val is Evaluacion)
+        switch (item.Key)
         {
-          if(ImprimirEval)
+          case LlaveDiccionario.Evaluacion:
+            if(ImprimirEval)
             Console.WriteLine(val);
-        }else if(val is Escuela)
-        {
-          Console.WriteLine("Escuela:" + val);
-        } else if(val is Alumno)
-        {
-          Console.WriteLine("Alumno:" + val.Nombre);
-        }else
-        {
-          Console.WriteLine(val);
+          break;
+
+          case LlaveDiccionario.Escuela:
+            Console.WriteLine("Escuela: " + val);
+          break;
+
+          case LlaveDiccionario.Alumno:
+            Console.WriteLine("Alumno: " + val.Nombre);
+          break;
+
+          case LlaveDiccionario.Curso:
+            var cursoTemp = val as Curso;
+            if(cursoTemp != null){
+              int count = cursoTemp.Alumnos.Count;
+              Console.WriteLine($"Curso {val.Nombre} - Cantidad de Alumnos {count}");
+            }
+          break;
+
+          default:
+            Console.WriteLine(val);
+          break;
         }
+
+        // if(val is Evaluacion)
+        // {
+        //   if(ImprimirEval)
+        //     Console.WriteLine(val);
+        // }else if(val is Escuela)
+        // {
+        //   Console.WriteLine("Escuela:" + val);
+        // } else if(val is Alumno)
+        // {
+        //   Console.WriteLine("Alumno:" + val.Nombre);
+        // }else
+        // {
+        //   Console.WriteLine(val);
+        // }
         
       }
     }
