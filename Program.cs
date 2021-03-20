@@ -138,6 +138,9 @@ namespace CoreEscuela
             // dicc["Luna"] = "Protagonista de Soy Luna";
             // WriteLine(dicc["Luna"]);
 
+            var dictem = engine.GetDiccionarioObjetos();
+            engine.ImprimirDiccionario(dictem);
+
         }
 
 #region Mostrar Informacion Escuela

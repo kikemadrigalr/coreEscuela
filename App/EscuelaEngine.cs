@@ -43,7 +43,37 @@ namespace CoreEscuela
     //se resume asi ya que Cursos es un list y por ende IEnumerable
     diccionario.Add(LlaveDiccionario.Curso, Escuela.Cursos);
 
+    var listaTempAlum = new List<Alumno>();
+    var listaTempAsig = new List<Asignatura>();
+    var listaTempEval = new List<Evaluacion>();
+    foreach (var cur in Escuela.Cursos)
+    {
+      listaTempAlum.AddRange(cur.Alumnos);
+      listaTempAsig.AddRange(cur.Asignaturas);
+
+      foreach (var alum in cur.Alumnos)
+      {
+        // diccionario.Add(LlaveDiccionario.Evaluacion, alum.Evaluaciones);
+        listaTempEval.AddRange(alum.Evaluaciones);
+      }
+    }
+    diccionario.Add(LlaveDiccionario.Alumno, listaTempAlum);
+    diccionario.Add(LlaveDiccionario.Asignatura, listaTempAsig);
+    diccionario.Add(LlaveDiccionario.Evaluacion, listaTempEval);
+
     return diccionario;
+  }
+
+  public void ImprimirDiccionario(Dictionary<LlaveDiccionario, IEnumerable<ObjetoEscuelaBase>> dic){
+    foreach (var obj in dic)
+    {
+      Printer.DibujarTitulo(obj.Key.ToString());
+
+      foreach (var val in obj.Value)
+      {
+        Console.WriteLine(val);
+      }
+    }
   }
 #endregion
 
