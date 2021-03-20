@@ -64,14 +64,28 @@ namespace CoreEscuela
     return diccionario;
   }
 
-  public void ImprimirDiccionario(Dictionary<LlaveDiccionario, IEnumerable<ObjetoEscuelaBase>> dic){
+  public void ImprimirDiccionario(Dictionary<LlaveDiccionario, IEnumerable<ObjetoEscuelaBase>> dic, bool ImprimirEval = false){
     foreach (var obj in dic)
     {
       Printer.DibujarTitulo(obj.Key.ToString());
 
       foreach (var val in obj.Value)
       {
-        Console.WriteLine(val);
+        if(val is Evaluacion)
+        {
+          if(ImprimirEval)
+            Console.WriteLine(val);
+        }else if(val is Escuela)
+        {
+          Console.WriteLine("Escuela:" + val);
+        } else if(val is Alumno)
+        {
+          Console.WriteLine("Alumno:" + val.Nombre);
+        }else
+        {
+          Console.WriteLine(val);
+        }
+        
       }
     }
   }
