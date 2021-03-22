@@ -13,11 +13,34 @@ namespace CoreEscuela
     {
         static void Main(string[] args)
         {
+          //Manejo de eventos 
+          //CurrentDomain representa el lugar donde se este ejecutando la aplicacion
+          //se utiliza el operador += para asignar el apuntador del evento
+          //ProcessExit Indica que el evento se va a ejecutar cuando se cierre la aplicacion
+          AppDomain.CurrentDomain.ProcessExit += AccionDelEvento;
+          //otra forma de agregar un evento usando expresiones lamda
+          //multicast delegate, es un manejador de eventos que recibe muchos delegados
+          AppDomain.CurrentDomain.ProcessExit += (o, s) => Printer.Timbrar(440,1000,1);
+
+          //eliminar un delegado del manejador de eventos con -=
+          AppDomain.CurrentDomain.ProcessExit -= AccionDelEvento;
+
+          // AppDomain: funcionalidad interna del framework, es donde se ejecutan cada una de las aplicaciones en un momento determinado.
+          // CurrentDomain: donde se ejecuta el programa específicamente.
+          // Evento: dispara varias accciones en un momento determinado  
+          // ProcessExit: se dispara cada vez que la aplicacion finaliza de forma normal y no abruta.
+
+
+
           var engine = new EscuelaEngine();
           
           engine.Inicializar();
           Printer.DibujarTitulo($"BIENVENIDOS A LA ESCUELA {engine.Escuela.Nombre}");
           mostrarDatosEscuela(engine.Escuela);
+          
+          //esto cerraria el programa y ejecutaria el evento
+          return;
+
           // Printer.Timbrar(880,1000);
           // Printer.Timbrar(1046,2000);
           // ImprimirCursosEscuela(engine.Escuela);
@@ -143,8 +166,15 @@ namespace CoreEscuela
 
         }
 
-#region Mostrar Informacion Escuela
-        private static void mostrarDatosEscuela(Escuela escuela){
+    private static void AccionDelEvento(object sender, EventArgs e)
+    {
+      Printer.DibujarTitulo("Saliendo");
+      Printer.Timbrar(880, 1000, 3);
+      Printer.DibujarTitulo("Saliò");
+    }
+
+    #region Mostrar Informacion Escuela
+    private static void mostrarDatosEscuela(Escuela escuela){
           if(escuela != null)
           {
             WriteLine(escuela);
