@@ -8,7 +8,7 @@ using System.Linq;
 using CoreEscuela.Entidades;
 using CoreEscuela.Util;
 
-namespace CoreEscuela
+namespace CoreEscuela.App
 {
   //sealed indica que la clase puede ser instanciada pero no se puede heredar de ella en otra clase
   public sealed class EscuelaEngine

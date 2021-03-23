@@ -6,6 +6,7 @@ using CoreEscuela.Entidades;
 using static System.Console;
 using CoreEscuela.Util;
 using System.Linq;
+using CoreEscuela.App;
 
 namespace CoreEscuela
 {
@@ -17,13 +18,13 @@ namespace CoreEscuela
           //CurrentDomain representa el lugar donde se este ejecutando la aplicacion
           //se utiliza el operador += para asignar el apuntador del evento
           //ProcessExit Indica que el evento se va a ejecutar cuando se cierre la aplicacion
-          AppDomain.CurrentDomain.ProcessExit += AccionDelEvento;
+          // AppDomain.CurrentDomain.ProcessExit += AccionDelEvento;
           //otra forma de agregar un evento usando expresiones lamda
           //multicast delegate, es un manejador de eventos que recibe muchos delegados
-          AppDomain.CurrentDomain.ProcessExit += (o, s) => Printer.Timbrar(440,1000,1);
+          // AppDomain.CurrentDomain.ProcessExit += (o, s) => Printer.Timbrar(440,1000,1);
 
           //eliminar un delegado del manejador de eventos con -=
-          AppDomain.CurrentDomain.ProcessExit -= AccionDelEvento;
+          //AppDomain.CurrentDomain.ProcessExit -= AccionDelEvento;
 
           // AppDomain: funcionalidad interna del framework, es donde se ejecutan cada una de las aplicaciones en un momento determinado.
           // CurrentDomain: donde se ejecuta el programa específicamente.
@@ -37,9 +38,12 @@ namespace CoreEscuela
           engine.Inicializar();
           Printer.DibujarTitulo($"BIENVENIDOS A LA ESCUELA {engine.Escuela.Nombre}");
           mostrarDatosEscuela(engine.Escuela);
+
+          var reporteador = new Reporteador(engine.GetDiccionarioObjetos());
+          reporteador.GetListaEvaluaciones();
           
-          //esto cerraria el programa y ejecutaria el evento
-          return;
+          //esto cerraria el programa y ejecutaria el evento()
+          // return;
 
           // Printer.Timbrar(880,1000);
           // Printer.Timbrar(1046,2000);
