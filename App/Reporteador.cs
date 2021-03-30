@@ -77,5 +77,35 @@ namespace CoreEscuela.App
 
             return DiccResp;
         }
+
+        //metodo para generar una lista del promedio de cada alumno que esta registrado en la asignatura
+        //Asignatura : Lista de alumnos : Promedio
+        //utilizando LinQ
+        public Dictionary<String, IEnumerable<Object>> GetPromedioAlumnosAsignatura(){
+            var resp = new Dictionary<String, IEnumerable<Object>>();
+
+            //obtener lista de evaluaciones por asignaturas
+            var dicEvaluacionesAsignaturas = GetDiccEvalAsignaturas();
+
+            //rrecores las llaves del diccionario (asignaturas) para obtener las evaluaciones de cada una
+            foreach (var asignConEvaluacion in dicEvaluacionesAsignaturas)
+            {
+                var dummy = from evaluacion in asignConEvaluacion.Value
+                            group evaluacion by evaluacion.Alumno.UniqueId 
+                            into grupoEvalsAlumno
+                            select new { 
+                                // evaluacion.Alumno.UniqueId,
+                                // NombreAlumno = evaluacion.Alumno.Nombre,
+                                // NombreEvaluacion = evaluacion.Nombre,
+                                // evaluacion.Nota
+                                AlumnoId = grupoEvalsAlumno.Key,
+                                Promedio = grupoEvalsAlumno.Average(eval => Math.Round(eval.Nota,2))
+                                };
+                                //se crea un objeto compuesto, del tipo anonimo usando la palabra reservada new
+                                //permite devover un objeto que nunca he creado
+            }
+
+            return resp;
+        }
     }
 }
