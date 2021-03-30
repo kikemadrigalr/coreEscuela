@@ -40,7 +40,9 @@ namespace CoreEscuela
           mostrarDatosEscuela(engine.Escuela);
 
           var reporteador = new Reporteador(engine.GetDiccionarioObjetos());
-          reporteador.GetListaEvaluaciones();
+          var evalList = reporteador.GetListaEvaluaciones();
+          var listaAsign = reporteador.GetListaAsignaturas();
+          var listaEvaluacionAsignatura = reporteador.GetDiccEvalAsignaturas();
           
           //esto cerraria el programa y ejecutaria el evento()
           // return;
