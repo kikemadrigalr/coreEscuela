@@ -90,19 +90,24 @@ namespace CoreEscuela.App
             //rrecores las llaves del diccionario (asignaturas) para obtener las evaluaciones de cada una
             foreach (var asignConEvaluacion in dicEvaluacionesAsignaturas)
             {
-                var dummy = from evaluacion in asignConEvaluacion.Value
-                            group evaluacion by evaluacion.Alumno.UniqueId 
+                var promediosAlumnos = from evaluacion in asignConEvaluacion.Value
+                            group evaluacion by new {
+                                evaluacion.Alumno.UniqueId,
+                                evaluacion.Alumno.Nombre
+                            } 
                             into grupoEvalsAlumno
-                            select new { 
+                            select new AlumnoPromedio{ 
                                 // evaluacion.Alumno.UniqueId,
                                 // NombreAlumno = evaluacion.Alumno.Nombre,
                                 // NombreEvaluacion = evaluacion.Nombre,
                                 // evaluacion.Nota
-                                AlumnoId = grupoEvalsAlumno.Key,
-                                Promedio = grupoEvalsAlumno.Average(eval => Math.Round(eval.Nota,2))
+                                alumnoId = grupoEvalsAlumno.Key.UniqueId,
+                                promedio = grupoEvalsAlumno.Average(eval => Math.Round(eval.Nota,2)),
+                                alumnoNombre = grupoEvalsAlumno.Key.Nombre
                                 };
                                 //se crea un objeto compuesto, del tipo anonimo usando la palabra reservada new
                                 //permite devover un objeto que nunca he creado
+                                resp.Add(asignConEvaluacion.Key, promediosAlumnos);
             }
 
             return resp;

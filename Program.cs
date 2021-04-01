@@ -45,6 +45,8 @@ namespace CoreEscuela
           var listaEvaluacionAsignatura = reporteador.GetDiccEvalAsignaturas();
           var promediosAsignatura = reporteador.GetPromedioAlumnosAsignatura();
           
+          
+          
           //esto cerraria el programa y ejecutaria el evento()
           // return;
 
