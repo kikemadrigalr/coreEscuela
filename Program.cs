@@ -44,7 +44,8 @@ namespace CoreEscuela
           var listaAsign = reporteador.GetListaAsignaturas();
           var listaEvaluacionAsignatura = reporteador.GetDiccEvalAsignaturas();
           var promediosAsignatura = reporteador.GetPromedioAlumnosAsignatura();
-          
+          var topPromedios = reporteador.GetTopPromedios(10);
+          var topAsignatura = reporteador.GetTopPromediosAsignatura("matemáticas", 5);
           
           
           //esto cerraria el programa y ejecutaria el evento()

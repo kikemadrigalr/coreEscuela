@@ -81,8 +81,8 @@ namespace CoreEscuela.App
         //metodo para generar una lista del promedio de cada alumno que esta registrado en la asignatura
         //Asignatura : Lista de alumnos : Promedio
         //utilizando LinQ
-        public Dictionary<String, IEnumerable<Object>> GetPromedioAlumnosAsignatura(){
-            var resp = new Dictionary<String, IEnumerable<Object>>();
+        public Dictionary<String, IEnumerable<AlumnoPromedio>> GetPromedioAlumnosAsignatura(){
+            var resp = new Dictionary<String, IEnumerable<AlumnoPromedio>>();
 
             //obtener lista de evaluaciones por asignaturas
             var dicEvaluacionesAsignaturas = GetDiccEvalAsignaturas();
@@ -112,5 +112,36 @@ namespace CoreEscuela.App
 
             return resp;
         }
+        public Dictionary<String, IEnumerable<AlumnoPromedio>> GetTopPromedios(int top){
+            var resp = new Dictionary<String, IEnumerable<AlumnoPromedio>>();
+            var diccPromedios = GetPromedioAlumnosAsignatura();
+
+            foreach (var asignConPromedios in diccPromedios)
+            {
+                var TopPromedios = (from item in asignConPromedios.Value
+                                    orderby item.promedio descending
+                                   select item).Take(top);
+                                
+                resp.Add(asignConPromedios.Key, TopPromedios); 
+            }
+             return resp;
+        }
+
+        public Dictionary<String, IEnumerable<AlumnoPromedio>> GetTopPromediosAsignatura(string asignatura, int top){
+            var resp = new Dictionary<String, IEnumerable<AlumnoPromedio>>();
+            var diccPromedios = GetPromedioAlumnosAsignatura();
+            
+            foreach (var asignConPromedios in diccPromedios)
+            {
+                if(asignConPromedios.Key.ToLower() == asignatura.ToLower()){
+                    var TopPromedios = (from item in asignConPromedios.Value
+                                    orderby item.promedio descending
+                                   select item).Take(top);
+                    
+                    resp.Add(asignConPromedios.Key, TopPromedios); 
+                }
+            }
+            return resp;
+            }
     }
 }
