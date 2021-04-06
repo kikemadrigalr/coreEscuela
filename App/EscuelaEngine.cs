@@ -8,9 +8,10 @@ using System.Linq;
 using CoreEscuela.Entidades;
 using CoreEscuela.Util;
 
-namespace CoreEscuela
+namespace CoreEscuela.App
 {
-  public class EscuelaEngine
+  //sealed indica que la clase puede ser instanciada pero no se puede heredar de ella en otra clase
+  public sealed class EscuelaEngine
   {
     public Escuela Escuela { get; set; }
     
@@ -26,8 +27,245 @@ namespace CoreEscuela
       CargarCursos();
       CargarAsignaturas();
       CargarEvaluaciones();
+      // var ObjetosEscuela = getObjetosEscuela();
     }
 
+#region Diccionario 
+//este diccionario almacenara una lista de objetos en cada llave
+//esta lista esta definida como IEnumerable de <ObjetoEscuelaBase>
+  public Dictionary<LlaveDiccionario, IEnumerable<ObjetoEscuelaBase>> GetDiccionarioObjetos(){
+    var diccionario = new Dictionary<LlaveDiccionario, IEnumerable<ObjetoEscuelaBase>>();
+
+    //se convierte en arreglo para que sea Ienumerable
+    diccionario.Add(LlaveDiccionario.Escuela, new[] {Escuela}); 
+    // se agrega un arreglo de Objetos escuela haciendo cast a objetos escuela bases, ya que cursos heredad de elle
+    // diccionario.Add("Cursos", Escuela.Cursos.Cast<ObjetoEscuelaBase>()); 
+    //se resume asi ya que Cursos es un list y por ende IEnumerable
+    diccionario.Add(LlaveDiccionario.Curso, Escuela.Cursos);
+
+    var listaTempAlum = new List<Alumno>();
+    var listaTempAsig = new List<Asignatura>();
+    var listaTempEval = new List<Evaluacion>();
+    foreach (var cur in Escuela.Cursos)
+    {
+      listaTempAlum.AddRange(cur.Alumnos);
+      listaTempAsig.AddRange(cur.Asignaturas);
+
+      foreach (var alum in cur.Alumnos)
+      {
+        // diccionario.Add(LlaveDiccionario.Evaluacion, alum.Evaluaciones);
+        listaTempEval.AddRange(alum.Evaluaciones);
+      }
+    }
+    diccionario.Add(LlaveDiccionario.Alumno, listaTempAlum);
+    diccionario.Add(LlaveDiccionario.Asignatura, listaTempAsig);
+    diccionario.Add(LlaveDiccionario.Evaluacion, listaTempEval);
+
+    return diccionario;
+  }
+
+  public void ImprimirDiccionario(Dictionary<LlaveDiccionario, IEnumerable<ObjetoEscuelaBase>> dic, bool ImprimirEval = false){
+    foreach (var item in dic)
+    {
+      Printer.DibujarTitulo(item.Key.ToString());
+
+      foreach (var val in item.Value)
+      {
+        switch (item.Key)
+        {
+          case LlaveDiccionario.Evaluacion:
+            if(ImprimirEval)
+            Console.WriteLine(val);
+          break;
+
+          case LlaveDiccionario.Escuela:
+            Console.WriteLine("Escuela: " + val);
+          break;
+
+          case LlaveDiccionario.Alumno:
+            Console.WriteLine("Alumno: " + val.Nombre);
+          break;
+
+          case LlaveDiccionario.Curso:
+            var cursoTemp = val as Curso;
+            if(cursoTemp != null){
+              int count = cursoTemp.Alumnos.Count;
+              Console.WriteLine($"Curso {val.Nombre} - Cantidad de Alumnos {count}");
+            }
+          break;
+
+          default:
+            Console.WriteLine(val);
+          break;
+        }
+
+        // if(val is Evaluacion)
+        // {
+        //   if(ImprimirEval)
+        //     Console.WriteLine(val);
+        // }else if(val is Escuela)
+        // {
+        //   Console.WriteLine("Escuela:" + val);
+        // } else if(val is Alumno)
+        // {
+        //   Console.WriteLine("Alumno:" + val.Nombre);
+        // }else
+        // {
+        //   Console.WriteLine(val);
+        // }
+        
+      }
+    }
+  }
+#endregion
+
+#region Lista Objestos de la escuela
+
+//SOBRECARGAS DEL METODO PARA OBTENER LISTA DE OBJETOS DE LA 
+//MODFICANDO LOSPARAMETROS DE SALIDA
+
+//ESTA SOBRECARGA NO RECIBE PARAMETROS DE SALIDA
+public IReadOnlyList<ObjetoEscuelaBase> getObjetosEscuela(
+  bool traerEvaluaciones = true, bool traerAlumnos = true, bool traerAsignaturas = true, bool traerCursos = true
+  ){
+    return getObjetosEscuela(out int dummy, out dummy, out dummy, out dummy);
+}
+
+//ESTA SOBRECARGA RECIBE UN PARAMETRO DE SALIDA 
+//CONTEO DE EVALUACIONES
+public IReadOnlyList<ObjetoEscuelaBase> getObjetosEscuela(
+  out int conteoEvaluaciones,
+  bool traerEvaluaciones = true, bool traerAlumnos = true, bool traerAsignaturas = true, bool traerCursos = true
+  ){
+    return getObjetosEscuela(out conteoEvaluaciones, out int dummy, out dummy, out dummy);
+}
+
+//SOBRECARGA PARA RECIBIR EL PARAMETRO DE SALIDA CONTEO DE EVALUACIONES Y ALUMNOS
+public IReadOnlyList<ObjetoEscuelaBase> getObjetosEscuela(
+  out int conteoEvaluaciones, out int conteoAsignaturas,
+  bool traerEvaluaciones = true, bool traerAlumnos = true, bool traerAsignaturas = true, bool traerCursos = true
+  ){
+    return getObjetosEscuela(out conteoEvaluaciones, out conteoAsignaturas, out int dummy, out dummy);
+}
+
+
+//SOBRECARGA PARA RECIBIR EL PARAMETRO DE SALIDA CONTEO DE EVALUACIONES , ALUMNOS ASIGNATURAS
+public IReadOnlyList<ObjetoEscuelaBase> getObjetosEscuela(
+  out int conteoEvaluaciones,out int conteoAsignaturas, out int conteoCursos,
+  bool traerEvaluaciones = true, bool traerAlumnos = true, bool traerAsignaturas = true, bool traerCursos = true
+  ){
+    return getObjetosEscuela(out conteoEvaluaciones, out conteoAsignaturas, out conteoCursos, out int dummy);
+}
+
+// //SOBRECARGA PARA RECIBIR EL PARAMETRO DE SALIDA CONTEO DE EVALUACIONES , ALUMNOS, ASIGNATURAS, CURSOS
+// public List<ObjetoEscuelaBase> getObjetosEscuela(
+//   out int conteoEvaluaciones, out int conteoAlumnos, out int conteoAsignaturas, out int conteoCursos,
+//   bool traerEvaluaciones = true, bool traerAlumnos = true, bool traerAsignaturas = true, bool traerCursos = true
+//   ){
+//     return getObjetosEscuela(out conteoEvaluaciones, out conteoAlumnos, out conteoAsignaturas, out conteoCursos);
+// }
+
+//utilizar listas de solo lectura para valores de etorno tipo List
+//esto evita que se creen objetos de un tipo en especifico sin pasar por la estructura definida de la escuela
+//ES DECIR NO SE PODRN CREAR OBJETOS CURSOS; EVALUACIONES ALUMNOS FUERA DE LA ESTRUCTURA DE LA ESCUELA
+//NO SE PUEDEN ADICIONAR MIEMBROS A LISTAS QUE SON DE SOLO LECTURA
+
+//reesribiendo metodo para utilizar parametros opciones y definir parametros de salida
+// public List<ObjetoEscuelaBase> getObjetosEscuela(
+public IReadOnlyList<ObjetoEscuelaBase> getObjetosEscuela(
+  out int conteoEvaluaciones, out int conteoAlumnos, out int conteoAsignaturas, out int conteoCursos,
+  bool traerEvaluaciones = true, bool traerAlumnos = true, bool traerAsignaturas = true, bool traerCursos = true
+  ){
+    var listaObjetos = new List<ObjetoEscuelaBase>();
+    conteoAlumnos = conteoAsignaturas =  conteoEvaluaciones = 0;
+
+    listaObjetos.Add(Escuela);
+
+    if(traerCursos)
+      listaObjetos.AddRange(Escuela.Cursos);
+
+    conteoCursos = Escuela.Cursos.Count;
+    foreach (var curso in Escuela.Cursos)
+    {
+      conteoAsignaturas += curso.Asignaturas.Count;
+      conteoAlumnos += curso.Alumnos.Count;
+
+      if(traerAsignaturas)
+        listaObjetos.AddRange(curso.Asignaturas);
+
+      if(traerAlumnos)
+        listaObjetos.AddRange(curso.Alumnos);
+
+      if (traerEvaluaciones)
+      {
+        foreach (var alumno in curso.Alumnos)
+        {
+          listaObjetos.AddRange(alumno.Evaluaciones);
+          conteoEvaluaciones += alumno.Evaluaciones.Count;
+        }
+      }
+      
+    }
+        
+    return listaObjetos.AsReadOnly();
+  }
+
+
+
+//reescribiendo el metodo getObjetosEscuela para utilizar parametros opcionales dependiendo de los objetos que quiero recuperar
+//y definir parametros de salida para que devuelva mas de un objeto
+  // public (List<ObjetoEscuelaBase>, int) getObjetosEscuela(bool traerEvaluaciones = true, bool traerAlumnos = true, bool traerAsignaturas = true, bool traerCursos = true){
+  //   var listaObjetos = new List<ObjetoEscuelaBase>();
+  //   int conteoEvaluaciones = 0;
+
+  //   listaObjetos.Add(Escuela);
+
+  //   if(traerCursos)
+  //     listaObjetos.AddRange(Escuela.Cursos);
+
+  //   foreach (var curso in Escuela.Cursos)
+  //   {
+  //     if(traerAsignaturas)
+  //       listaObjetos.AddRange(curso.Asignaturas);
+
+  //     if(traerAlumnos)
+  //       listaObjetos.AddRange(curso.Alumnos);
+
+  //     if (traerEvaluaciones)
+  //     {
+  //       foreach (var alumno in curso.Alumnos)
+  //       {
+  //         listaObjetos.AddRange(alumno.Evaluaciones);
+  //         conteoEvaluaciones += alumno.Evaluaciones.Count;
+  //       }
+  //     }
+      
+  //   }
+        
+  //   return (listaObjetos, conteoEvaluaciones);
+  // }
+      // public List<ObjetoEscuelaBase> getObjetosEscuela(){
+      //   var listaObjetos = new List<ObjetoEscuelaBase>();
+
+      //   listaObjetos.Add(Escuela);
+      //   listaObjetos.AddRange(Escuela.Cursos);
+
+      //   foreach (var curso in Escuela.Cursos)
+      //   {
+      //     listaObjetos.AddRange(curso.Asignaturas);
+      //     listaObjetos.AddRange(curso.Alumnos);
+
+      //     foreach (var alumno in curso.Alumnos)
+      //     {
+      //       listaObjetos.AddRange(alumno.Evaluaciones);
+      //     }
+      //   }
+        
+      //   return listaObjetos;
+      // }
+#endregion
+
+#region Metodos de Carga
       private void CargarCursos(){
         Escuela.Cursos = new List<Curso>(){
           new Curso(){ Nombre = "101", Jornada = TiposJornada.Mañana},
@@ -106,5 +344,6 @@ namespace CoreEscuela
           }
         }
       }
+#endregion
   }
 }

@@ -1,18 +1,20 @@
 using System;
 using System.Collections.Generic;
+using CoreEscuela.Util;
+
 namespace CoreEscuela.Entidades
 {
-    public class Escuela
+    public class Escuela:ObjetoEscuelaBase, ILugar
     {
-        public string UniqueId { get; set; } = Guid.NewGuid().ToString();
+        // public string UniqueId { get; set; } = Guid.NewGuid().ToString();
       
-        string nombre;
+        // string nombre;
         //encapsulamiento de la propiedad nombre
-        public string Nombre{
-          // get{ return "Copia: " + nombre; }
-          get {return nombre; }
-          set{ nombre = value.ToUpper(); }
-        }
+        // public string Nombre{
+        //   // get{ return "Copia: " + nombre; }
+        //   get {return nombre; }
+        //   set{ nombre = value.ToUpper(); }
+        // }
 
         //otra forma de crear y encapsular las propiedades y hacer setter y getter
         public int AnioCreacion{ get; set; }
@@ -23,14 +25,15 @@ namespace CoreEscuela.Entidades
         // la propiedad TipoEscuela sera del TiposEscuelas
         //el cual es un objeto Enumeraable creado a nivel de las entidades
         public TiposEscuela TipoEscuela { get; set; }
+        public string Direccion { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        //constructor
-        // public Escuela(string nombre, int anio){
-        //   this.nombre = nombre;
-        //   AnioCreacion = anio;
-        // }
+    //constructor
+    // public Escuela(string nombre, int anio){
+    //   this.nombre = nombre;
+    //   AnioCreacion = anio;
+    // }
 
-        //otra forma de escribir el Constructor utilizando igualacion por tuplas
+    //otra forma de escribir el Constructor utilizando igualacion por tuplas
         public Escuela(string nombre, int anio) => (Nombre, AnioCreacion) = (nombre, anio);
 
         //crear un constructor diferenta, para inicializar el objeto de otra manera
@@ -47,6 +50,18 @@ namespace CoreEscuela.Entidades
         public override string ToString()
         {
           return $"Nombre: \"{Nombre}\", Tipo: {TipoEscuela}, {System.Environment.NewLine}Pais: {Pais}, Ciudad: {Ciudad}";
+        }
+
+        public void LimpiarLugar()
+        {
+            Printer.DibujarLinea();
+            Console.WriteLine("Limpiando Escuela");
+            foreach (var curso in Cursos)
+            {
+              curso.LimpiarLugar();
+            }
+            Printer.DibujarTitulo($"Escuela: {Nombre}, Está Limpia");
+            Printer.Timbrar(880,cantidad:3);
         }
 
     }
