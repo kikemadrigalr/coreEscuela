@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
 using CoreEscuela.Entidades;
 using static System.Console;
@@ -18,10 +16,10 @@ namespace CoreEscuela
           //CurrentDomain representa el lugar donde se este ejecutando la aplicacion
           //se utiliza el operador += para asignar el apuntador del evento
           //ProcessExit Indica que el evento se va a ejecutar cuando se cierre la aplicacion
-          // AppDomain.CurrentDomain.ProcessExit += AccionDelEvento;
+          AppDomain.CurrentDomain.ProcessExit += AccionDelEvento;
           //otra forma de agregar un evento usando expresiones lamda
           //multicast delegate, es un manejador de eventos que recibe muchos delegados
-          // AppDomain.CurrentDomain.ProcessExit += (o, s) => Printer.Timbrar(440,1000,1);
+          AppDomain.CurrentDomain.ProcessExit += (o, s) => Printer.Timbrar(440,1000,1);
 
           //eliminar un delegado del manejador de eventos con -=
           //AppDomain.CurrentDomain.ProcessExit -= AccionDelEvento;
@@ -46,6 +44,60 @@ namespace CoreEscuela
           var promediosAsignatura = reporteador.GetPromedioAlumnosAsignatura();
           var topPromedios = reporteador.GetTopPromedios(10);
           var topAsignatura = reporteador.GetTopPromediosAsignatura("matemáticas", 5);
+
+
+          //Captura de una evaluacion por consola
+          WriteLine("Captura de Una evaluacion por consola");
+          var nuevaEvaluacion = new Evaluacion();
+          string nombre, notaString;
+          double nota;
+
+          WriteLine("Ingrese el Nombre de la Evaluación");
+          Printer.PrsioneEnter();
+          nombre = Console.ReadLine();
+
+          if(string.IsNullOrWhiteSpace(nombre)){
+            // throw new ArgumentException();
+            Printer.DibujarTitulo("El Nombre no puede ser vacio");
+            WriteLine("Saliendo del Programa");
+          }else{
+            nuevaEvaluacion.Nombre = nombre.ToLower();
+            WriteLine("El nombre de la evaluacion ha sido ingresado correctamente");
+          }
+
+          WriteLine("Ingrese la Nota de laa Evaluaión");
+          Printer.PrsioneEnter();
+          notaString = Console.ReadLine();
+
+          if(string.IsNullOrWhiteSpace(notaString)){
+            Printer.DibujarTitulo("El valor de la nota NO puede ser vacio");
+            WriteLine("Saliendo del Programa");
+          }else{
+            try
+            {
+              nuevaEvaluacion.Nota = float.Parse(notaString);
+              if(nuevaEvaluacion.Nota < 0 || nuevaEvaluacion.Nota > 5){
+                throw new ArgumentOutOfRangeException("La nota debe estar entre 0 y 5");
+              }
+              WriteLine("El nota de la evaluacion ha sido ingresada correctamente");
+              return;
+            }
+            catch(ArgumentOutOfRangeException arge)
+            {
+              Printer.DibujarTitulo(arge.Message);
+              WriteLine("Saliendo del Programa");
+            }
+            catch (Exception)
+            {
+              Printer.DibujarTitulo("El valor de la nota no es número válido");
+              WriteLine("Saliendo del Programa");
+            }
+            finally
+            {
+              Printer.DibujarTitulo("FINALLY");
+              Printer.Timbrar(440, 500, 3);
+            }
+          }
           
           
           //esto cerraria el programa y ejecutaria el evento()
@@ -86,7 +138,7 @@ namespace CoreEscuela
           //el cmpilador detecta que son tipos diferentes
           //Con el casting el compilador entiende que son similares pero falla al momento de ejecutar
           // alumnoTest = (Alumno)objetoDummy;
-          Printer.DibujarTitulo("Objeto Alumno");
+          // Printer.DibujarTitulo("Objeto Alumno");
           // WriteLine($"Alumno: {alumnoTest.Nombre}");
           // WriteLine($"Alumno: {alumnoTest.UniqueId}");
           // WriteLine($"Alumno: {alumnoTest.GetType()}");
@@ -119,10 +171,10 @@ namespace CoreEscuela
           //sino devuelve null
           var alumnoRecuperado2 = ob as Alumno;
 
-          if(alumnoRecuperado2 != null){
-            WriteLine("Datos del Alumno");
+          // if(alumnoRecuperado2 != null){
+          //   WriteLine("Datos del Alumno");
 
-          }
+          // }
 
           // engine.Escuela.LimpiarLugar();
           
@@ -172,7 +224,7 @@ namespace CoreEscuela
             // WriteLine(dicc["Luna"]);
 
             var dictem = engine.GetDiccionarioObjetos();
-            engine.ImprimirDiccionario(dictem);
+            // engine.ImprimirDiccionario(dictem);
 
         }
 
