@@ -16,10 +16,10 @@ namespace CoreEscuela
           //CurrentDomain representa el lugar donde se este ejecutando la aplicacion
           //se utiliza el operador += para asignar el apuntador del evento
           //ProcessExit Indica que el evento se va a ejecutar cuando se cierre la aplicacion
-          AppDomain.CurrentDomain.ProcessExit += AccionDelEvento;
+          // AppDomain.CurrentDomain.ProcessExit += AccionDelEvento;
           //otra forma de agregar un evento usando expresiones lamda
           //multicast delegate, es un manejador de eventos que recibe muchos delegados
-          AppDomain.CurrentDomain.ProcessExit += (o, s) => Printer.Timbrar(440,1000,1);
+          // AppDomain.CurrentDomain.ProcessExit += (o, s) => Printer.Timbrar(440,1000,1);
 
           //eliminar un delegado del manejador de eventos con -=
           //AppDomain.CurrentDomain.ProcessExit -= AccionDelEvento;
@@ -39,14 +39,15 @@ namespace CoreEscuela
 
           var reporteador = new Reporteador(engine.GetDiccionarioObjetos());
           var evalList = reporteador.GetListaEvaluaciones();
-          var listaAsign = reporteador.GetListaAsignaturas();
+          // var listaAsign = reporteador.GetListaAsignaturas();
           var listaEvaluacionAsignatura = reporteador.GetDiccEvalAsignaturas();
-          var promediosAsignatura = reporteador.GetPromedioAlumnosAsignatura();
-          var topPromedios = reporteador.GetTopPromedios(10);
-          var topAsignatura = reporteador.GetTopPromediosAsignatura("matemáticas", 5);
+          // var promediosAsignatura = reporteador.GetPromedioAlumnosAsignatura();
+          // var topPromedios = reporteador.GetTopPromedios(10);
+          // var topAsignatura = reporteador.GetTopPromediosAsignatura("matemáticas", 5);
 
-
+#region Manejo de exepciones 
           //Captura de una evaluacion por consola
+          /*
           WriteLine("Captura de Una evaluacion por consola");
           var nuevaEvaluacion = new Evaluacion();
           string nombre, notaString;
@@ -98,7 +99,8 @@ namespace CoreEscuela
               Printer.Timbrar(440, 500, 3);
             }
           }
-          
+          */
+#endregion 
           
           //esto cerraria el programa y ejecutaria el evento()
           // return;
@@ -226,6 +228,144 @@ namespace CoreEscuela
             var dictem = engine.GetDiccionarioObjetos();
             // engine.ImprimirDiccionario(dictem);
 
+#region Reto 3 - Menu para mostrar reportes
+      int opcion;
+      string opc;
+
+      do
+      {
+        WriteLine("Seleccione el reporte que Desea mostrar");
+        WriteLine("1 - Lista de Asignaturas");
+        WriteLine("2 - Lista de Promedios");
+        WriteLine("3 - Top Promedios por Asignaturas");
+        WriteLine("4 - Top Promedios de Una Asignatura");
+        WriteLine("5 - Lista de Evaluaciones Por Asignatura");
+
+        opc = Console.ReadLine();
+
+        if(string.IsNullOrWhiteSpace(opc))
+        {
+          Printer.DibujarTitulo("El valor ingresado no puede ser vacio");
+          WriteLine("Saliendo del Programa");
+        }
+        else
+        {
+          string top, materia;
+          opcion = Int32.Parse(opc);
+          if(opcion < 1 || opcion > 5)
+          {
+            Printer.DibujarTitulo("Debe seleccionar un valor de la lista. Intente de Nuevo");
+          }
+          else
+          {
+            switch (opcion)
+            {
+              case 1: 
+                Console.Clear();
+                Printer.DibujarTitulo("Lista de Asignaturas");
+                MostrarListaAsignaturas(reporteador);
+                break;
+              case 2: 
+                Console.Clear();
+                Printer.DibujarTitulo("Lista de Promedios");
+                MostrarPromediosAlumnos(reporteador);
+                break;
+              case 3: 
+                Console.Clear();
+                Printer.DibujarTitulo("Top Promedios por Asignaturas");
+                // string top;
+                do
+                {
+                  WriteLine("Ingrese el Top promedio que desea listar - Max 10");
+                  top = Console.ReadLine();
+
+                  if(Int32.Parse(top) < 1 || Int32.Parse(top) > 10)
+                  {
+                    Printer.DibujarTitulo("Debe Ingresar un vaalor entre 1 y 10");
+                  }
+                  else
+                  {
+                    MostrarTopPromediosAsignaturas(reporteador, Int32.Parse(top));
+                  }
+                }while(Int32.Parse(top) < 1 || Int32.Parse(top) > 10);
+                
+                break;
+              case 4: 
+                Console.Clear();
+                Printer.DibujarTitulo("Top Promedios de una Asignatura");
+                // string top, materia;
+                do
+                {
+                  WriteLine("Ingrese el Top promedio que desea listar - Max 10");
+                  top = Console.ReadLine();
+
+                  if(Int32.Parse(top) < 1 || Int32.Parse(top) > 10)
+                  {
+                    Printer.DibujarTitulo("Debe Ingresar un vaalor entre 1 y 10");
+                  }
+                  else
+                  {
+                    do
+                    {
+                      WriteLine("Ingrese la asignatura a consultar");
+                      WriteLine("1 - Matemáticas");
+                      WriteLine("2 - Educación Física");
+                      WriteLine("3 - Castellano");
+                      WriteLine("4 - Ciencias Naturales");
+                      materia = Console.ReadLine();
+                    
+                      if(Int32.Parse(materia) < 1 || Int32.Parse(materia) > 4)
+                      {
+                        Printer.DibujarTitulo("Debe Ingresar un vaalor entre 1 y 4");
+                      }
+                      else
+                      {
+                        string materiaBuscar;
+
+                        if(Int32.Parse(materia) == 1)
+                        {
+                          materiaBuscar = "Matemáticas";
+                          MostrarTopPromediosUnaAsignatura(reporteador, materiaBuscar, Int32.Parse(top));
+                        }
+
+                        if(Int32.Parse(materia) == 2)
+                        {
+                          materiaBuscar = "Educación Física";
+                          MostrarTopPromediosUnaAsignatura(reporteador, materiaBuscar, Int32.Parse(top));
+                        }
+
+                        if(Int32.Parse(materia) == 3)
+                        {
+                          materiaBuscar = "Castellano";
+                          MostrarTopPromediosUnaAsignatura(reporteador, materiaBuscar, Int32.Parse(top));
+                        }
+
+                        if(Int32.Parse(materia) == 4)
+                        {
+                          materiaBuscar = "Ciencias Naturales";
+                          MostrarTopPromediosUnaAsignatura(reporteador, materiaBuscar, Int32.Parse(top));
+                        }
+
+                        // MostrarTopPromediosUnaAsignatura(reporteador, materiaBuscar, Int32.Parse(top));
+                      }
+                    }while(Int32.Parse(materia) < 1 || Int32.Parse(materia) > 4);
+                  }
+                }while(Int32.Parse(top) < 1 || Int32.Parse(top) > 10);
+                
+                break;
+              case 5: 
+                Console.Clear();
+                Printer.DibujarTitulo("Lista de Evaluaciones Por Asignatura");
+                break;
+            }
+            
+          }
+          
+        }
+
+      } while (opc == "" || Int32.Parse(opc) < 1 || Int32.Parse(opc) > 5);
+
+#endregion
         }
 
     private static void AccionDelEvento(object sender, EventArgs e)
@@ -294,6 +434,55 @@ namespace CoreEscuela
             Printer.DibujarLinea(50);
             Printer.DibujarLinea(50);
           }
+        }
+      }
+    }
+    #endregion
+
+    #region Metodos para Mostrar Reportes
+    private static void MostrarListaAsignaturas(Reporteador reporteador){
+      var listaAsign = reporteador.GetListaAsignaturas();
+
+      foreach (var item in listaAsign)
+      {
+        WriteLine($"* {item}");
+      }
+    }
+    
+    private static void MostrarPromediosAlumnos(Reporteador reporteador){
+      var promediosAsignatura = reporteador.GetPromedioAlumnosAsignatura();
+
+      foreach (var item in promediosAsignatura)
+      {
+        Printer.DibujarTitulo(item.Key);
+        foreach (var key in item.Value)
+        {
+          WriteLine($"* {key.alumnoNombre} - {key.promedio}");
+        }
+      }
+    }
+      private static void MostrarTopPromediosAsignaturas(Reporteador reporteador, int top){
+      var topPromedios = reporteador.GetTopPromedios(top);
+
+      foreach (var item in topPromedios)
+      {
+        Printer.DibujarTitulo(item.Key);
+        foreach (var key in item.Value)
+        {
+          WriteLine($"* {key.alumnoNombre} - {key.promedio}");
+        }
+      }
+    }
+
+      private static void MostrarTopPromediosUnaAsignatura(Reporteador reporteador, string asignatura, int top){
+      var topAsignatura = reporteador.GetTopPromediosAsignatura(asignatura, top);
+
+      foreach (var item in topAsignatura)
+      {
+        Printer.DibujarTitulo(item.Key);
+        foreach (var key in item.Value)
+        {
+          WriteLine($"* {key.alumnoNombre} - {key.promedio}");
         }
       }
     }
